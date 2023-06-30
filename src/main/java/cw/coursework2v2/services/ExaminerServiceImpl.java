@@ -24,9 +24,11 @@ public class ExaminerServiceImpl implements ExaminerService {
     @Override
     public Collection<Question> getQuestions(int amount) throws TooManyQuestionsException {
         Set<Question> randomQuestions = new HashSet<>();
-        randomQuestions.add(questionService.getRandomQuestion());
-        if (random.nextInt() > randomQuestions.size()) {
-            throw new TooManyQuestionsException();
+        while (randomQuestions.size() != amount) {
+            randomQuestions.add(questionService.getRandomQuestion());
+            if (amount > questionService.getAll().size()) {
+                throw new TooManyQuestionsException();
+            }
         }
         return randomQuestions;
     }
