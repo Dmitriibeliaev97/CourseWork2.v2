@@ -38,12 +38,9 @@ public class JavaQuestionService implements QuestionService {
 
     @Override
     public Collection<Question> getAll() {
-        for (int i = 0; i < questions.size(); i++) {
-            System.out.println(i);
             if (questions.isEmpty()) {
                 throw new SetIsEmpty("Список вопросов пуст");
             }
-        }
         return questions;
     }
 
