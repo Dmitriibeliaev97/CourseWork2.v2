@@ -7,10 +7,7 @@ import cw.coursework2v2.interfaces.QuestionService;
 import cw.coursework2v2.model.Question;
 import org.springframework.stereotype.Service;
 
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Random;
-import java.util.Set;
+import java.util.*;
 
 @Service
 public class JavaQuestionService implements QuestionService {
@@ -31,12 +28,10 @@ public class JavaQuestionService implements QuestionService {
 
     @Override
     public Question remove(Question question) throws QuestionIsNotFoundException {
-        for (int i = 0; i < questions.size(); i++) {
-            if (questions.contains(question)) {
-                questions.remove(question);
-            } else {
-                throw new QuestionIsNotFoundException("Вопрос не найден");
-            }
+        if (questions.contains(question)) {
+            questions.remove(question);
+        } else {
+            throw new QuestionIsNotFoundException("Вопрос не найден");
         }
         return question;
     }
@@ -54,10 +49,11 @@ public class JavaQuestionService implements QuestionService {
 
     @Override
     public Question getRandomQuestion() {
-        for (int i = 0; i < questions.size(); i++) {
-            Random randomQuestion = null;
-            randomQuestion.nextInt(10);
+        List<Question> questionList = new ArrayList<>();
+        Random random = new Random();
+        for (Question i : questions) {
+            questionList.add(i);
         }
-        return null;
+        return questionList.get(random.nextInt(questionList.size()));
     }
 }
