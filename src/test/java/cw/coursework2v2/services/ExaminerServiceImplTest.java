@@ -1,5 +1,6 @@
 package cw.coursework2v2.services;
 
+import cw.coursework2v2.exceptions.QuestionIsNotFoundException;
 import cw.coursework2v2.exceptions.TooManyQuestionsException;
 import cw.coursework2v2.interfaces.QuestionService;
 import cw.coursework2v2.model.Question;
@@ -12,9 +13,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.*;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
-import static org.springframework.test.util.AssertionErrors.assertEquals;
-
 
 @ExtendWith(MockitoExtension.class)
 class ExaminerServiceImplTest {
@@ -31,16 +31,26 @@ class ExaminerServiceImplTest {
 
     @Test
     void shouldGetQuestionsByAmount() throws TooManyQuestionsException {
+        // given
         final int amount = 3;
         final Collection<Question> randomQuestions = new HashSet<>(questions);
-        for (Question question : questions) {
-            randomQuestions.add(question);
-        }
+
+        when(questionService.getRandomQuestion()).thenReturn(questions.get(0), questions.get(1), questions.get(2));
         when(questionService.getAll()).thenReturn(randomQuestions);
 
+        // when
         Collection<Question> getQuestionsByAmount = examinerService.getQuestions(amount);
 
-        Assertions.assertEquals(questions, getQuestionsByAmount);
+        // then
+        Assertions.assertEquals(randomQuestions, getQuestionsByAmount);
+
+        verify(questionService, times(3)).getRandomQuestion();
+        verify(questionService, times(3)).getAll();
+    }
+
+    @Test
+    void shouldThrowExceptionWhenRequestedTooManyQuestions () {
+        assertThrows (TooManyQuestionsException.class, () -> examinerService.getQuestions(4));
     }
 
 }
