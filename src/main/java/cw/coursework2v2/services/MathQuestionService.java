@@ -4,17 +4,17 @@ import cw.coursework2v2.interfaces.QuestionRepository;
 import cw.coursework2v2.interfaces.QuestionService;
 import cw.coursework2v2.model.Question;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Service;
 
 import java.util.*;
 
-@Service
-public class JavaQuestionService implements QuestionService {
-    @Qualifier("javaQuestionRepository")
-    private final QuestionRepository javaQuestionRepository;
-    public JavaQuestionService(QuestionService javaQuestionRepository) {
-        this.javaQuestionRepository = javaQuestionRepository;
+public class MathQuestionService implements QuestionService {
+    @Qualifier("mathQuestionRepository")
+    private final QuestionRepository mathQuestionRepository;
+
+    public MathQuestionService(QuestionService mathQuestionRepository) {
+        this.mathQuestionRepository = mathQuestionRepository;
     }
+
     Set<Question> questions = new HashSet<>();
 
     @Override
@@ -26,17 +26,17 @@ public class JavaQuestionService implements QuestionService {
 
     @Override
     public Question add(Question question) {
-        return javaQuestionRepository.add(question);
+        return mathQuestionRepository.add(question);
     }
 
     @Override
     public Question remove(Question question) {
-        return javaQuestionRepository.remove(question);
+        return mathQuestionRepository.remove(question);
     }
 
     @Override
     public Collection<Question> getAll() {
-        return javaQuestionRepository.getAll();
+        return mathQuestionRepository.getAll();
     }
 
     @Override

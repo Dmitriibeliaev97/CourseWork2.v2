@@ -23,7 +23,7 @@ class JavaQuestionServiceTest {
         question2 = new Question("2", "2");
         question3 = new Question("3", "3");
 
-        questions = new JavaQuestionService();
+        questions = new JavaQuestionService(questions);
         questions.add(question1);
         questions.add(question2);
         questions.add(question3);

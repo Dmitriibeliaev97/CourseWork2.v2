@@ -5,6 +5,7 @@ import cw.coursework2v2.exceptions.TooManyQuestionsException;
 import cw.coursework2v2.interfaces.ExaminerService;
 import cw.coursework2v2.interfaces.QuestionService;
 import cw.coursework2v2.model.Question;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
@@ -16,17 +17,23 @@ import java.util.Set;
 public class ExaminerServiceImpl implements ExaminerService {
     private final Random random = new Random();
 
-    private final QuestionService questionService;
+    private final QuestionService javaQuestionService;
+    private final QuestionService mathQuestionService;
 
-    public ExaminerServiceImpl(QuestionService questionService) {
-        this.questionService = questionService;
+    public ExaminerServiceImpl(@Qualifier ("javaQuestionService") QuestionService javaQuestionService,
+                               @Qualifier ("mathQuestionService") QuestionService mathQuestionService) {
+        this.javaQuestionService = javaQuestionService;
+        this.mathQuestionService = mathQuestionService;
     }
+
+
     @Override
     public Collection<Question> getQuestions(int amount) throws TooManyQuestionsException {
         Set<Question> randomQuestions = new HashSet<>();
         while (randomQuestions.size() != amount) {
-            randomQuestions.add(questionService.getRandomQuestion());
-            if (amount > questionService.getAll().size()) {
+            randomQuestions.add(javaQuestionService.getRandomQuestion());
+            randomQuestions.add(mathQuestionService.getRandomQuestion());
+            if (amount > javaQuestionService.getAll().size() + mathQuestionService.getAll().size()) {
                 throw new TooManyQuestionsException();
             }
         }
