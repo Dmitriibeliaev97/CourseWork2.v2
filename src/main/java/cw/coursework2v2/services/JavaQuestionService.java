@@ -10,11 +10,10 @@ import java.util.*;
 
 @Service
 public class JavaQuestionService implements QuestionService {
-    @Qualifier("javaQuestionRepository")
     private final QuestionRepository javaQuestionRepository;
     Set<Question> questions = new HashSet<>();
 
-    public JavaQuestionService(QuestionRepository javaQuestionRepository) {
+    public JavaQuestionService(@Qualifier("javaQuestionRepository") QuestionRepository javaQuestionRepository) {
         this.javaQuestionRepository = javaQuestionRepository;
     }
 

@@ -2,7 +2,9 @@ package cw.coursework2v2.controllers;
 
 import cw.coursework2v2.interfaces.QuestionService;
 import cw.coursework2v2.model.Question;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -10,14 +12,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Collection;
 
-
 @RestController
 @RequestMapping("/exam/math")
 public class MathQuestionController {
-    @Qualifier("mathQuestionService")
+
     private final QuestionService questionService;
 
-    public MathQuestionController(QuestionService service) {
+    @Autowired
+    public MathQuestionController(@Qualifier("mathQuestionService") QuestionService service) {
         this.questionService = service;
     }
 

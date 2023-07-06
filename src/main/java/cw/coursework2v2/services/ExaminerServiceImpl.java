@@ -16,12 +16,12 @@ import java.util.Set;
 @Service
 public class ExaminerServiceImpl implements ExaminerService {
     private final Random random = new Random();
-    @Qualifier("javaQuestionService")
+
     private final QuestionService javaQuestionService;
-    @Qualifier("mathQuestionService")
     private final QuestionService mathQuestionService;
 
-    public ExaminerServiceImpl(QuestionService javaQuestionService, QuestionService mathQuestionService) {
+    public ExaminerServiceImpl(@Qualifier("javaQuestionService") QuestionService javaQuestionService,
+                               @Qualifier("mathQuestionService") QuestionService mathQuestionService) {
         this.javaQuestionService = javaQuestionService;
         this.mathQuestionService = mathQuestionService;
     }

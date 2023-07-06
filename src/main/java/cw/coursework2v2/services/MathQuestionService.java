@@ -4,16 +4,16 @@ import cw.coursework2v2.interfaces.QuestionRepository;
 import cw.coursework2v2.interfaces.QuestionService;
 import cw.coursework2v2.model.Question;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
 
 import java.util.*;
-
+@Service
 public class MathQuestionService implements QuestionService {
-    @Qualifier("mathQuestionRepository")
     private final QuestionRepository mathQuestionRepository;
 
     Set<Question> questions = new HashSet<>();
 
-    public MathQuestionService(QuestionRepository mathQuestionRepository) {
+    public MathQuestionService(@Qualifier("mathQuestionRepository") QuestionRepository mathQuestionRepository) {
         this.mathQuestionRepository = mathQuestionRepository;
     }
 
