@@ -12,10 +12,11 @@ import java.util.*;
 public class JavaQuestionService implements QuestionService {
     @Qualifier("javaQuestionRepository")
     private final QuestionRepository javaQuestionRepository;
-    public JavaQuestionService(QuestionService javaQuestionRepository) {
+    Set<Question> questions = new HashSet<>();
+
+    public JavaQuestionService(QuestionRepository javaQuestionRepository) {
         this.javaQuestionRepository = javaQuestionRepository;
     }
-    Set<Question> questions = new HashSet<>();
 
     @Override
     public Question add(String question, String answer) {
@@ -48,4 +49,5 @@ public class JavaQuestionService implements QuestionService {
         }
         return questionList.get(random.nextInt(questionList.size()));
     }
+
 }

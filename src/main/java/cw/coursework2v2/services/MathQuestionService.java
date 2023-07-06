@@ -11,11 +11,11 @@ public class MathQuestionService implements QuestionService {
     @Qualifier("mathQuestionRepository")
     private final QuestionRepository mathQuestionRepository;
 
-    public MathQuestionService(QuestionService mathQuestionRepository) {
+    Set<Question> questions = new HashSet<>();
+
+    public MathQuestionService(QuestionRepository mathQuestionRepository) {
         this.mathQuestionRepository = mathQuestionRepository;
     }
-
-    Set<Question> questions = new HashSet<>();
 
     @Override
     public Question add(String question, String answer) {
