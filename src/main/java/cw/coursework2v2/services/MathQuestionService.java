@@ -7,11 +7,10 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
+
 @Service
 public class MathQuestionService implements QuestionService {
     private final QuestionRepository mathQuestionRepository;
-
-    Set<Question> questions = new HashSet<>();
 
     public MathQuestionService(@Qualifier("mathQuestionRepository") QuestionRepository mathQuestionRepository) {
         this.mathQuestionRepository = mathQuestionRepository;
@@ -20,7 +19,7 @@ public class MathQuestionService implements QuestionService {
     @Override
     public Question add(String question, String answer) {
         Question newQuestion = new Question(question, answer);
-        questions.add(newQuestion);
+        mathQuestionRepository.add(newQuestion);
         return newQuestion;
     }
 

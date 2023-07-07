@@ -11,7 +11,6 @@ import java.util.*;
 @Service
 public class JavaQuestionService implements QuestionService {
     private final QuestionRepository javaQuestionRepository;
-    Set<Question> questions = new HashSet<>();
 
     public JavaQuestionService(@Qualifier("javaQuestionRepository") QuestionRepository javaQuestionRepository) {
         this.javaQuestionRepository = javaQuestionRepository;
@@ -20,7 +19,7 @@ public class JavaQuestionService implements QuestionService {
     @Override
     public Question add(String question, String answer) {
         Question newQuestion = new Question(question, answer);
-        questions.add(newQuestion);
+        javaQuestionRepository.add(newQuestion);
         return newQuestion;
     }
 
