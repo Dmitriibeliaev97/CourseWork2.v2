@@ -41,11 +41,8 @@ public class MathQuestionService implements QuestionService {
 
     @Override
     public Question getRandomQuestion() {
-        List<Question> questionList = new ArrayList<>();
         Random random = new Random();
-        for (Question i : questions) {
-            questionList.add(i);
-        }
+        List<Question> questionList = new ArrayList<>(mathQuestionRepository.getAll());
         return questionList.get(random.nextInt(questionList.size()));
     }
 }

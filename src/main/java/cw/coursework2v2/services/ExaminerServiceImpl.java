@@ -33,9 +33,9 @@ public class ExaminerServiceImpl implements ExaminerService {
         while (randomQuestions.size() != amount) {
             randomQuestions.add(javaQuestionService.getRandomQuestion());
             randomQuestions.add(mathQuestionService.getRandomQuestion());
-            if (amount > javaQuestionService.getAll().size() + mathQuestionService.getAll().size()) {
-                throw new TooManyQuestionsException();
-            }
+        }
+        if (amount > javaQuestionService.getAll().size() + mathQuestionService.getAll().size()) {
+            throw new TooManyQuestionsException();
         }
         return randomQuestions;
     }
