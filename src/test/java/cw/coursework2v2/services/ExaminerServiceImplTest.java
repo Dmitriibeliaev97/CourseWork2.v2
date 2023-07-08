@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 
 import java.util.*;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
@@ -40,19 +41,26 @@ class ExaminerServiceImplTest {
     void shouldGetQuestionsByAmount() throws TooManyQuestionsException {
         // given
         final int amount = 4;
-        final Collection<Question> randomQuestions = new HashSet<>(questions);
 
-
+        when(javaQuestionService.getAll()).thenReturn(questions);
+        when(mathQuestionService.getAll()).thenReturn(questions);
         when(mathQuestionService.getRandomQuestion()).thenReturn(questions.get(1), questions.get(3));
         when(javaQuestionService.getRandomQuestion()).thenReturn(questions.get(0), questions.get(2));
-        when(mathQuestionService.getAll()).thenReturn(randomQuestions);
-        when(javaQuestionService.getAll()).thenReturn(randomQuestions);
 
         // when
         Collection<Question> getQuestionsByAmount = examinerService.getQuestions(amount);
 
         // then
-        Assertions.assertEquals(randomQuestions, getQuestionsByAmount);
+        Assertions.assertEquals(amount, getQuestionsByAmount.size());
+        Assertions.assertTrue(getQuestionsByAmount.contains(questions.get(0)));
+        Assertions.assertTrue(getQuestionsByAmount.contains(questions.get(1)));
+        Assertions.assertTrue(getQuestionsByAmount.contains(questions.get(2)));
+        Assertions.assertTrue(getQuestionsByAmount.contains(questions.get(3)));
+
+
+//        org.assertj.core.api.Assertions.assertThat(getQuestionsByAmount)
+//                .hasSize(amount)
+//                .containsExactlyInAnyOrder(questions.get(0), questions.get(1), questions.get(2), questions.get(3));
 
         verify(mathQuestionService, times(2)).getRandomQuestion();
         verify(javaQuestionService, times(2)).getRandomQuestion();
