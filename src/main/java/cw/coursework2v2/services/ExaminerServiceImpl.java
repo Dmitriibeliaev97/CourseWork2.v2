@@ -35,7 +35,7 @@ public class ExaminerServiceImpl implements ExaminerService {
         Set<Question> randomQuestions = new HashSet<>();
         while (randomQuestions.size() < amount) {
             randomQuestions.add(javaQuestionService.getRandomQuestion());
-            if (randomQuestions.size()> amount)
+            if (randomQuestions.size() == amount)
                 break;
             randomQuestions.add(mathQuestionService.getRandomQuestion());
         }
