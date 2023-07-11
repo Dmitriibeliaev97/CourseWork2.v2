@@ -2,9 +2,9 @@ package cw.coursework2v2.services;
 
 import cw.coursework2v2.exceptions.TooManyQuestionsException;
 import cw.coursework2v2.model.Question;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
@@ -19,8 +19,11 @@ class ExaminerServiceImplTest {
     private JavaQuestionService javaQuestionService;
     @Mock
     private MathQuestionService mathQuestionService;
-    @InjectMocks
     private ExaminerServiceImpl examinerService;
+    @BeforeEach
+    public void setUp() {
+        examinerService = new ExaminerServiceImpl(javaQuestionService, mathQuestionService);
+    }
 
     private final List<Question> questions = new ArrayList<>() {{
         add(new Question("1", "1"));
@@ -51,8 +54,8 @@ class ExaminerServiceImplTest {
 
         verify(mathQuestionService, times(2)).getRandomQuestion();
         verify(javaQuestionService, times(2)).getRandomQuestion();
-        verify(mathQuestionService, times(2)).getAll();
-        verify(javaQuestionService, times(2)).getAll();
+        verify(mathQuestionService, times(1)).getAll();
+        verify(javaQuestionService, times(1)).getAll();
     }
 
     @Test
