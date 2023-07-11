@@ -1,6 +1,7 @@
 package cw.coursework2v2.services;
 
 
+import cw.coursework2v2.exceptions.MethodNotAllowed;
 import cw.coursework2v2.exceptions.TooManyQuestionsException;
 import cw.coursework2v2.interfaces.ExaminerService;
 import cw.coursework2v2.interfaces.QuestionService;
@@ -21,13 +22,13 @@ public class ExaminerServiceImpl implements ExaminerService {
     private final QuestionService mathQuestionService;
 
     public ExaminerServiceImpl(@Qualifier("javaQuestionService") QuestionService javaQuestionService,
-                               @Qualifier("mathQuestionService") QuestionService mathQuestionService) {
+                               @Qualifier ("mathQuestionService") QuestionService mathQuestionService) {
         this.javaQuestionService = javaQuestionService;
         this.mathQuestionService = mathQuestionService;
     }
 
     @Override
-    public Collection<Question> getQuestions(int amount) throws TooManyQuestionsException {
+    public Collection<Question> getQuestions(int amount) throws TooManyQuestionsException, MethodNotAllowed {
         if (amount > javaQuestionService.getAll().size() + mathQuestionService.getAll().size()) {
             throw new TooManyQuestionsException();
         }

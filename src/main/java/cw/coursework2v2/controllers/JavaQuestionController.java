@@ -1,6 +1,7 @@
 package cw.coursework2v2.controllers;
 
 
+import cw.coursework2v2.exceptions.MethodNotAllowed;
 import cw.coursework2v2.interfaces.QuestionService;
 import cw.coursework2v2.model.Question;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -22,18 +23,18 @@ public class JavaQuestionController {
 
     @GetMapping("/add")
     public Question addQuestion(@RequestParam("question") String question,
-                                @RequestParam("answer") String answer) {
+                                @RequestParam("answer") String answer) throws MethodNotAllowed {
         return questionService.add(new Question(question, answer));
     }
 
     @GetMapping()
-    public Collection<Question> getQuestion() {
+    public Collection<Question> getQuestion() throws MethodNotAllowed {
         return questionService.getAll();
     }
 
     @GetMapping("/remove")
     public Question removeQuestion(@RequestParam("question") String question,
-                                   @RequestParam("answer") String answer) {
+                                   @RequestParam("answer") String answer) throws MethodNotAllowed {
         return questionService.remove(new Question(question, answer));
     }
 
