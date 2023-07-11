@@ -1,32 +1,24 @@
 package cw.coursework2v2.services;
 
-import cw.coursework2v2.exceptions.QuestionIsNotFoundException;
 import cw.coursework2v2.exceptions.TooManyQuestionsException;
-import cw.coursework2v2.interfaces.QuestionRepository;
-import cw.coursework2v2.interfaces.QuestionService;
 import cw.coursework2v2.model.Question;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.beans.factory.annotation.Qualifier;
 
 import java.util.*;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class ExaminerServiceImplTest {
     @Mock
-    @Qualifier("javaQuestionService")
-    private QuestionService javaQuestionService;
+    private JavaQuestionService javaQuestionService;
     @Mock
-    @Qualifier("mathQuestionService")
-    private QuestionService mathQuestionService;
+    private MathQuestionService mathQuestionService;
     @InjectMocks
     private ExaminerServiceImpl examinerService;
 
@@ -48,19 +40,14 @@ class ExaminerServiceImplTest {
         when(javaQuestionService.getRandomQuestion()).thenReturn(questions.get(0), questions.get(2));
 
         // when
-        Collection<Question> getQuestionsByAmount = examinerService.getQuestions(amount);
+       Collection<Question> getQuestionsByAmount = examinerService.getQuestions(amount);
 
         // then
-        Assertions.assertEquals(amount, getQuestionsByAmount.size());
-        Assertions.assertTrue(getQuestionsByAmount.contains(questions.get(0)));
-        Assertions.assertTrue(getQuestionsByAmount.contains(questions.get(1)));
-        Assertions.assertTrue(getQuestionsByAmount.contains(questions.get(2)));
-        Assertions.assertTrue(getQuestionsByAmount.contains(questions.get(3)));
-
-
-//        org.assertj.core.api.Assertions.assertThat(getQuestionsByAmount)
-//                .hasSize(amount)
-//                .containsExactlyInAnyOrder(questions.get(0), questions.get(1), questions.get(2), questions.get(3));
+        assertEquals(amount, getQuestionsByAmount.size());
+        assertTrue(getQuestionsByAmount.contains(questions.get(0)));
+        assertTrue(getQuestionsByAmount.contains(questions.get(1)));
+        assertTrue(getQuestionsByAmount.contains(questions.get(2)));
+        assertTrue(getQuestionsByAmount.contains(questions.get(3)));
 
         verify(mathQuestionService, times(2)).getRandomQuestion();
         verify(javaQuestionService, times(2)).getRandomQuestion();
@@ -69,8 +56,8 @@ class ExaminerServiceImplTest {
     }
 
     @Test
-    void shouldThrowExceptionWhenRequestedTooManyQuestions () {
-        assertThrows (TooManyQuestionsException.class, () -> examinerService.getQuestions(5));
+    void shouldThrowExceptionWhenRequestedTooManyQuestions() {
+        assertThrows(TooManyQuestionsException.class, () -> examinerService.getQuestions(5));
     }
 
 }

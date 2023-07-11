@@ -26,7 +26,6 @@ public class ExaminerServiceImpl implements ExaminerService {
         this.mathQuestionService = mathQuestionService;
     }
 
-
     @Override
     public Collection<Question> getQuestions(int amount) throws TooManyQuestionsException {
         if (amount > javaQuestionService.getAll().size() + mathQuestionService.getAll().size()) {
