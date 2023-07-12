@@ -14,6 +14,13 @@ import java.util.Set;
 public class JavaQuestionRepository implements QuestionRepository {
     Set<Question> javaQuestions = new HashSet<>();
 
+    @PostConstruct
+    public void setUp() {
+        javaQuestions.add(new Question("Какие области данных в памяти Джава выделяют?", "Стек и куча"));
+        javaQuestions.add(new Question("На какой структуре данных основывается LinkedList?", "Двусвязный список"));
+        javaQuestions.add(new Question("Какие основные реализации интерфейса List?", "ArrayList / LinkedList"));
+    }
+
     public JavaQuestionRepository() {
     }
 

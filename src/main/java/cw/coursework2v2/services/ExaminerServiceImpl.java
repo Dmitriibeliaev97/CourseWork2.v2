@@ -29,7 +29,7 @@ public class ExaminerServiceImpl implements ExaminerService {
 
     @Override
     public Collection<Question> getQuestions(int amount) throws TooManyQuestionsException, MethodNotAllowed {
-        if (amount > javaQuestionService.getAll().size() + mathQuestionService.getAll().size()) {
+        if (amount > javaQuestionService.getAll().size()+1) {
             throw new TooManyQuestionsException();
         }
         Set<Question> randomQuestions = new HashSet<>();
@@ -40,5 +40,6 @@ public class ExaminerServiceImpl implements ExaminerService {
             randomQuestions.add(mathQuestionService.getRandomQuestion());
         }
         return randomQuestions;
+
     }
 }

@@ -1,10 +1,8 @@
 package cw.coursework2v2.services;
 
 import cw.coursework2v2.exceptions.MethodNotAllowed;
-import cw.coursework2v2.interfaces.QuestionRepository;
 import cw.coursework2v2.interfaces.QuestionService;
 import cw.coursework2v2.model.Question;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -41,7 +39,7 @@ public class MathQuestionService implements QuestionService {
         String randomQuestionsMultiply = firstNumber + " * " + secondNumber;
         String randomQuestionsDivision = firstNumber + " / " + secondNumber;
         List<Question> questionList = new ArrayList<>() {{
-            add(new Question(randomQuestionsPlus, " = " + firstNumber + secondNumber));
+            add(new Question(randomQuestionsPlus, " = " + (firstNumber + secondNumber)));
             add(new Question(randomQuestionsMinus, " = " + (firstNumber - secondNumber)));
             add(new Question(randomQuestionsMultiply, " = " + firstNumber * secondNumber));
             add(new Question(randomQuestionsDivision, " = " + firstNumber / secondNumber));

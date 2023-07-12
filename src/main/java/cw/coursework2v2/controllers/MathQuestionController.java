@@ -39,6 +39,5 @@ public class MathQuestionController {
                                    @RequestParam("answer") String answer) throws MethodNotAllowed {
         return questionService.remove(new Question(question, answer));
     }
-
 }
 
